@@ -9,6 +9,14 @@ export default function Input({ shouldFocus }) {
     setText(changeText);
   }
 
+  function characterCount() {
+    if (text.length > 0) {
+      return <Text>Character count: {text.length}</Text>
+    } else {
+      return null
+    }
+  }
+
   return (
     <View>
       <TextInput 
@@ -20,9 +28,9 @@ export default function Input({ shouldFocus }) {
         autoFocus={shouldFocus}
       />
         <Text>{text}</Text>
+        {characterCount()}
     </View>
-
-  )
+  );
 }
 
 const styles = StyleSheet.create({})
