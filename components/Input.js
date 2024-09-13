@@ -26,7 +26,7 @@ export default function Input({ shouldFocus }) {
   }
 
   function characterCount() {
-    if (text.length > 0) {
+    if (isFocused && text.length > 0) {
       return <Text>Character count: {text.length}</Text>
     } else {
       return null
