@@ -4,9 +4,25 @@ import { useState } from 'react';
 
 export default function Input({ shouldFocus }) {
   const [text, setText] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [message, setMessage] = useState("");
 
   function updateText(changeText) {
     setText(changeText);
+  }
+
+  function handleBlur() {
+    setIsFocused(false);
+    if (text.length < 3) {
+      setMessage("Please type more than 3 characters");
+    } else {
+      setMessage("Thank you!");
+    }
+  }
+
+  function handleFocus() {
+    setIsFocused(true);
+    setMessage("");
   }
 
   function characterCount() {
@@ -24,11 +40,14 @@ export default function Input({ shouldFocus }) {
         keyboardType='default' 
         style={{borderBottomColor: 'purple', borderBottomWidth: 2}}
         value={text}
-        onChangeText = {updateText}
+        onChangeText={updateText}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         autoFocus={shouldFocus}
       />
         <Text>{text}</Text>
         {characterCount()}
+        {message !== "" && <Text>{message}</Text>}
     </View>
   );
 }
