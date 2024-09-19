@@ -23,7 +23,7 @@ export default function App() {
         <Button title="Add a Goal" onPress={() => setModalVisible(true)}/>
       </View>
       <Input
-        shouldFocus={true}
+        textInputFocus={true}
         inputHandler={handleInputData}
         isModalVisible={ModalVisible}
       />
