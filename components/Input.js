@@ -43,10 +43,10 @@ export default function Input({ shouldFocus, inputHandler, isModalVisible }) {
   return (
     <Modal animationType='slide' visible={isModalVisible}>
       <View style={styles.container}>
-        <TextInput 
+        <TextInput style={styles.input}
           placeholder='Type something' 
           keyboardType='default' 
-          style={{borderBottomColor: 'purple', borderBottomWidth: 2}}
+          // style={{borderBottomColor: 'purple', borderBottomWidth: 2}}
           value={text}
           onChangeText={updateText}
           onFocus={handleFocus}
@@ -70,4 +70,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-},})
+  },
+
+  input: {
+    borderColor: 'purple', 
+    boarderWidth: 2, 
+    padding: 5,
+  },
+
+  buttonContainer: {
+    marginVertical: 5,
+    width: '30%',
+  }
+})

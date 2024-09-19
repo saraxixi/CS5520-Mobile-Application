@@ -18,14 +18,18 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Header name = {appName}/>
-      <Button title="Add a Goal" onPress={() => setModalVisible(true)}/>
-      <Input 
+      <View style={styles.topView}>
+        <Header name = {appName}/>
+        <Button title="Add a Goal" onPress={() => setModalVisible(true)}/>
+      </View>
+      <Input
         shouldFocus={true}
         inputHandler={handleInputData}
         isModalVisible={ModalVisible}
       />
-      <Text>{receivedData}</Text>
+      <View style={styles.bottomView}>
+        <Text style={styles.text}>{receivedData}</Text>
+      </View>
     </View>
   );
 }
@@ -34,7 +38,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    // alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  text: {
+    color: 'purple',
+  },
+
+  topView: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  bottomView: {
+    flex: 4,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  }
 });
