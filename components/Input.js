@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
   input: {
     borderColor: 'purple', 
     borderWidth: 2, 
-    padding: 5,
+    padding: 10,
+    marginTop: 20,
   },
 
   buttonContainer: {
