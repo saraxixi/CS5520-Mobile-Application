@@ -30,6 +30,17 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
   return (
     <Modal animationType="slide" visible={isModalVisible}>
       <View style={styles.container}>
+        <View>
+          <Image 
+            style={styles.image}
+            source={require('/Users/sara/Documents/CS5520/MobileApplication/assets/image.png')}
+            alt="Local image of a document icon" />
+          <Image 
+            style={styles.image}
+            source={{uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}} 
+            alt="Network image of a document icon"
+          />
+        </View>
         <TextInput
           autoFocus={textInputFocus}
           placeholder="Type something"
@@ -57,18 +68,6 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
         ) : (
           text && <Text>{text.length}</Text>
         )}
-        <View>
-          <Image 
-            style={styles.image}
-            source={require('/Users/sara/Documents/CS5520/MobileApplication/assets/image.png')}
-            alt="Local image of a document icon" />
-          <Image 
-            style={styles.image}
-            source={{uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}} 
-            alt="Network image of a document icon"
-          />
-          
-        </View>
         <View style={styles.buttonContainer}>
           <Button title="Confirm" onPress={handleConfirm} disabled={text.length < minChar}/>
           <Button title="Cancel" onPress={handleCancel} />
