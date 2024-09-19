@@ -1,8 +1,8 @@
-import { StyleSheet, TextInput, View, Text, StatusBar } from 'react-native';
+import { StyleSheet, TextInput, View, Text, StatusBar, Button } from 'react-native';
 import React from 'react'
 import { useState } from 'react';
 
-export default function Input({ shouldFocus }) {
+export default function Input({ shouldFocus, inputHandler }) {
   const [text, setText] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [message, setMessage] = useState("");
@@ -33,6 +33,13 @@ export default function Input({ shouldFocus }) {
     }
   }
 
+  function handleConfirm() {
+    console.log('pressed');
+    // call the callback function received from the parent component
+    // pass what user has typed
+    inputHandler(text);
+  }
+
   return (
     <View>
       <TextInput 
@@ -48,6 +55,9 @@ export default function Input({ shouldFocus }) {
         <Text>{text}</Text>
         {characterCount()}
         {message !== "" && <Text>{message}</Text>}
+        <Button 
+          title="Confirm"
+          onPress={handleConfirm} />
     </View>
   );
 }

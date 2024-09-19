@@ -4,13 +4,19 @@ import Header from './components/Header';
 import Input from './components/Input';
 
 export default function App() {
+  // const [receivedData, setReceivedData] = useState("");
   const appName = "My awesome app"
+
+  function handleInputData(receivedData) {
+    console.log(receivedData);
+
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header name = {appName}/>
-      <Input shouldFocus={true}/>
+      <Input shouldFocus={true} inputHandler={handleInputData}/>
     </View>
   );
 }
