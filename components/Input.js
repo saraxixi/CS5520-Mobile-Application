@@ -1,13 +1,28 @@
-import { StyleSheet, TextInput, View, Text, StatusBar, Button, Modal } from 'react-native';
+import { StyleSheet, TextInput, View, Text, StatusBar, Button, Modal, Alert } from 'react-native';
 import React from 'react'
 import { useState } from 'react';
 
-export default function Input({ textInputFocus, inputHandler, isModalVisible }) {
+export default function Input({ textInputFocus, inputHandler, isModalVisible, setIsModalVisible }) {
   const [text, setText] = useState("");
   const [blur, setBlur] = useState(false);
   function handleConfirm() {
     // console.log(text);
     inputHandler(text);
+  }
+  function handleCancel() {
+    Alert.alert("Confirm Cancel", "Are you sure you want to cancel?", 
+      [{
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel'
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          setIsModalVisible(false);
+        }
+      }]
+    );
   }
   return (
     <Modal animationType="slide" visible={isModalVisible}>
@@ -39,7 +54,10 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible }) 
         ) : (
           text && <Text>{text.length}</Text>
         )}
-        <Button title="Confirm" onPress={handleConfirm} />
+        <View style={styles.buttonContainer}>
+          <Button title="Confirm" onPress={handleConfirm} />
+          <Button title="Cancel" onPress={handleCancel} />
+        </View>
       </View>
     </Modal>
   );
@@ -60,7 +78,10 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    marginVertical: 5,
+    flexDirection: 'row',
+    marginTop: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
     width: '30%',
   }
 })

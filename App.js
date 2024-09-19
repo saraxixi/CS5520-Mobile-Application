@@ -6,7 +6,7 @@ import Input from './components/Input';
 
 export default function App() {
   const [receivedData, setReceivedData] = useState("");
-  const [ModalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const appName = "My awesome app"
 
   function handleInputData(receivedData) {
@@ -25,7 +25,8 @@ export default function App() {
       <Input
         textInputFocus={true}
         inputHandler={handleInputData}
-        isModalVisible={ModalVisible}
+        isModalVisible={modalVisible}
+        setIsModalVisible={setModalVisible}
       />
       <View style={styles.bottomView}>
         <Text style={styles.text}>{receivedData}</Text>
