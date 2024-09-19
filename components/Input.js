@@ -34,6 +34,9 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
           <Image 
             style={styles.image}
             source={require('/Users/sara/Documents/CS5520/MobileApplication/assets/image.png')}
+            /* aIt serves as a description that will be read aloud by screen readers,
+            improving accessibility for users with disabilities. In web applications,
+            it is also displayed if the image fails to load. */
             alt="Local image of a document icon" />
           <Image 
             style={styles.image}
