@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, SafeAreaView } from 'react-native';
 import React, {useState}from 'react'
 import Header from './components/Header';
 import Input from './components/Input';
@@ -16,7 +16,7 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.topView}>
         <Header name = {appName}/>
@@ -30,7 +30,7 @@ export default function App() {
       <View style={styles.bottomView}>
         <Text style={styles.text}>{receivedData}</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
   },
 
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 
   bottomView: {
     flex: 4,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: '#dcd',
+    // alignItems: 'center',
   }
 });
