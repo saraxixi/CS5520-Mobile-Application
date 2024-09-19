@@ -5,8 +5,10 @@ import { useState } from 'react';
 export default function Input({ textInputFocus, inputHandler, isModalVisible, setIsModalVisible }) {
   const [text, setText] = useState("");
   const [blur, setBlur] = useState(false);
+  const minChar = 3;
   function handleConfirm() {
     // console.log(text);
+    setText("");
     inputHandler(text);
   }
   function handleCancel() {
@@ -19,6 +21,7 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
       {
         text: 'OK',
         onPress: () => {
+          setText("");
           setIsModalVisible(false);
         }
       }]
@@ -55,7 +58,7 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
           text && <Text>{text.length}</Text>
         )}
         <View style={styles.buttonContainer}>
-          <Button title="Confirm" onPress={handleConfirm} />
+          <Button title="Confirm" onPress={handleConfirm} disabled={text.length < minChar}/>
           <Button title="Cancel" onPress={handleCancel} />
         </View>
       </View>
@@ -82,6 +85,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '30%',
+    // width: '30%',
   }
 })
