@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View, Text, StatusBar, Button, Modal, Alert } from 'react-native';
+import { StyleSheet, TextInput, View, Text, StatusBar, Button, Modal, Alert, Image} from 'react-native';
 import React from 'react'
 import { useState } from 'react';
 
@@ -57,6 +57,18 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
         ) : (
           text && <Text>{text.length}</Text>
         )}
+        <View>
+          <Image 
+            style={styles.image}
+            source={require('/Users/sara/Documents/CS5520/MobileApplication/assets/image.png')}
+            alt="Local image of a document icon" />
+          <Image 
+            style={styles.image}
+            source={{uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}} 
+            alt="Network image of a document icon"
+          />
+          
+        </View>
         <View style={styles.buttonContainer}>
           <Button title="Confirm" onPress={handleConfirm} disabled={text.length < minChar}/>
           <Button title="Cancel" onPress={handleCancel} />
@@ -86,5 +98,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     // width: '30%',
+  },
+
+  image: {
+    width: 100,
+    height: 100,
   }
 })
