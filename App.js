@@ -38,12 +38,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
   },
 
   text: {
     color: 'purple',
+    marginVertical: 5,
   },
 
   topView: {
@@ -55,6 +56,6 @@ const styles = StyleSheet.create({
   bottomView: {
     flex: 4,
     backgroundColor: '#dcd',
-    // alignItems: 'center',
+    alignItems: 'center',
   }
 });
