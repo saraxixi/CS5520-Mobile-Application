@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, ScrollView, FlatList} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, ScrollView, FlatList, Alert} from 'react-native';
 import React, {useState}from 'react'
 import Header from './components/Header';
 import Input from './components/Input';
@@ -28,6 +28,28 @@ export default function App() {
 
   function handleDelete(deleteID) {
     console.log("Delete button pressed", deleteID);
+    setGoals((prevGoals) => {
+      return prevGoals.filter((goalObj) => {
+        return goalObj.id !== deleteID;
+      });
+    });
+  }
+
+  function deleteAllGoals() {
+    Alert.alert(
+      "Delete All Goals",
+      "Are you sure you want to delete all goals?",
+      [
+        {
+          text: "Yes",
+          onPress: () => setGoals([])
+        },
+        {
+          text: "No",
+          style: "cancel",
+        },
+      ]
+    );
   }
 
   return (
@@ -47,6 +69,15 @@ export default function App() {
         <FlatList
           contentContainerStyle={styles.scrollViewContainer}
           data={goals}
+          ListEmptyComponent={() => {
+            return (<Text style={styles.text}>No goals to show</Text>)
+          }}
+          ListHeaderComponent={() => {
+            return (goals.length > 0 && (<Text style={styles.text}>Goals</Text>))
+          }}
+          ListFooterComponent={() => {
+            return (goals.length > 0 && (<Button title="Delete All" onPress={deleteAllGoals}/>))
+          }}
           renderItem={({item}) => {
             console.log(item);
             return (
