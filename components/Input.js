@@ -28,12 +28,13 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
     );
   }
   return (
-    <Modal animationType="slide" visible={isModalVisible}>
+    <Modal animationType="slide" visible={isModalVisible} transparent={true}>
       <View style={styles.container}>
+        <View style={styles.modalContainer}>
         <View>
           <Image 
             style={styles.image}
-            source={require('/Users/sara/Documents/CS5520/MobileApplication/assets/image.png')}
+            source={require('../assets/image.png')}
             /* aIt serves as a description that will be read aloud by screen readers,
             improving accessibility for users with disabilities. In web applications,
             it is also displayed if the image fails to load. */
@@ -76,6 +77,7 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
           <Button title="Cancel" onPress={handleCancel} />
         </View>
       </View>
+    </View>
     </Modal>
   );
 }
@@ -83,7 +85,7 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
 const styles = StyleSheet.create({  
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -106,5 +108,11 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
+  },
+
+  modalContainer: {
+    backgroundColor: '#aaa',
+    borderRadius: 10,
+    alignItems: "center",
   }
 })

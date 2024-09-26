@@ -29,7 +29,9 @@ export default function App() {
         setIsModalVisible={setModalVisible}
       />
       <View style={styles.bottomView}>
-        <Text style={styles.text}>{receivedData}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{receivedData}</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -45,7 +47,8 @@ const styles = StyleSheet.create({
 
   text: {
     color: 'purple',
-    marginVertical: 5,
+    fontSize: 25,
+    padding: 10,
   },
 
   topView: {
@@ -58,5 +61,10 @@ const styles = StyleSheet.create({
     flex: 4,
     backgroundColor: '#dcd',
     alignItems: 'center',
-  }
+  },
+
+  textContainer: {
+    backgroundColor: 'grey',
+    borderRadius: 10,
+  },
 });
