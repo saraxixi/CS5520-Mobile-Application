@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    backgroundColor: 'grey',
+    backgroundColor: '#aaa',
     borderRadius: 10,
   },
 });

@@ -73,8 +73,8 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
           text && <Text>{text.length}</Text>
         )}
         <View style={styles.buttonContainer}>
-          <Button title="Confirm" onPress={handleConfirm} disabled={text.length < minChar}/>
           <Button title="Cancel" onPress={handleCancel} />
+          <Button title="Confirm" onPress={handleConfirm} disabled={text.length < minChar}/>
         </View>
       </View>
     </View>
@@ -114,5 +114,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#aaa',
     borderRadius: 10,
     alignItems: "center",
+    width: '80%',
   }
 })
