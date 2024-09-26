@@ -36,6 +36,7 @@ export default function App() {
         setIsModalVisible={setModalVisible}
       />
       <View style={styles.bottomView}>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         {/*use array.map to show a list of goals*/}
         {goals.map((goalObj) => {
             return (
@@ -44,7 +45,7 @@ export default function App() {
               </View>
             );
           })}
-        
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -73,11 +74,14 @@ const styles = StyleSheet.create({
   bottomView: {
     flex: 4,
     backgroundColor: '#dcd',
-    alignItems: 'center',
   },
 
   textContainer: {
     backgroundColor: '#aaa',
     borderRadius: 10,
+  },
+
+  scrollViewContainer: {
+    alignItems: "center",
   },
 });
