@@ -76,7 +76,12 @@ export default function App() {
             return (goals.length > 0 && (<Text style={styles.text}>Goals</Text>))
           }}
           ListFooterComponent={() => {
-            return (goals.length > 0 && (<Button title="Delete All" onPress={deleteAllGoals}/>))
+            return (
+              goals.length > 0 && (
+              <View style={styles.footerContainer}>
+              <Button title="Delete all" onPress={deleteAllGoals}/>
+              </View>)
+            )
           }}
           ItemSeparatorComponent={() => {
             return (<View style={styles.separator}/>)
@@ -128,6 +133,11 @@ const styles = StyleSheet.create({
   },
 
   scrollViewContainer: {
+    alignItems: "center",
+  },
+
+  footerContainer: {
+    marginTop: 20,
     alignItems: "center",
   },
 
