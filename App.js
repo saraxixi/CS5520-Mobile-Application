@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, ScrollView, Fl
 import React, {useState}from 'react'
 import Header from './components/Header';
 import Input from './components/Input';
+import GoalItem from './components/GoalItem';
 
 export default function App() {
   const [receivedData, setReceivedData] = useState("");
@@ -20,6 +21,13 @@ export default function App() {
     //console.log(newGoals);
     setReceivedData(receivedData);
     setModalVisible(false);
+  }
+
+  function goalDeleteHandler(goalId) {
+  }
+
+  function handleDelete(deleteID) {
+    console.log("Delete button pressed", deleteID);
   }
 
   return (
@@ -40,10 +48,12 @@ export default function App() {
           contentContainerStyle={styles.scrollViewContainer}
           data={goals}
           renderItem={({item}) => {
-            console.log(receivedData);
-            return (<View key={item.id} style={styles.textContainer}>
-              <Text style={styles.text}>{item.text}</Text>
-            </View>)}}/>
+            console.log(item);
+            return (
+            <GoalItem goalObj={item} handleDelete={handleDelete}/>
+          );
+          }}
+        />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           {goals.map((goalObj) => {
             return (
@@ -81,11 +91,6 @@ const styles = StyleSheet.create({
   bottomView: {
     flex: 4,
     backgroundColor: '#dcd',
-  },
-
-  textContainer: {
-    backgroundColor: '#aaa',
-    borderRadius: 10,
   },
 
   scrollViewContainer: {
