@@ -78,6 +78,9 @@ export default function App() {
           ListFooterComponent={() => {
             return (goals.length > 0 && (<Button title="Delete All" onPress={deleteAllGoals}/>))
           }}
+          ItemSeparatorComponent={() => {
+            return (<View style={{height: 1, backgroundColor: 'black'}}/>)
+          }}
           renderItem={({item}) => {
             console.log(item);
             return (
