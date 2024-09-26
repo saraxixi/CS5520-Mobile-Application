@@ -79,7 +79,7 @@ export default function App() {
             return (goals.length > 0 && (<Button title="Delete All" onPress={deleteAllGoals}/>))
           }}
           ItemSeparatorComponent={() => {
-            return (<View style={{height: 1, backgroundColor: 'black'}}/>)
+            return (<View style={styles.separator}/>)
           }}
           renderItem={({item}) => {
             console.log(item);
@@ -132,7 +132,8 @@ const styles = StyleSheet.create({
   },
 
   separator: {
-    height: 1,
-    backgroundColor: 'black',
+    height: 5,
+    backgroundColor: 'darkgray',
+    marginVertical: 10,
   },
 });
