@@ -130,4 +130,9 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     alignItems: "center",
   },
+
+  separator: {
+    height: 1,
+    backgroundColor: 'black',
+  },
 });
