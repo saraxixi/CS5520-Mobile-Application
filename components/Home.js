@@ -5,7 +5,7 @@ import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
@@ -23,16 +23,22 @@ export default function Home() {
     setModalVisible(false);
   }
 
-  function goalDeleteHandler(goalId) {
+  function dismissModal() {
+    setModalVisible(false);
   }
-
-  function handleDelete(deleteID) {
-    console.log("Delete button pressed", deleteID);
+  function handleGoalDelete(deletedId) {
     setGoals((prevGoals) => {
       return prevGoals.filter((goalObj) => {
-        return goalObj.id !== deleteID;
+        return goalObj.id != deletedId;
       });
     });
+  }
+
+  function handleGoalPress(pressedGoal) {
+    //receive the goal obj
+    console.log(pressedGoal);
+    // navigate to GoalDetails and pass goal obj as params
+    navigation.navigate("Details", { goalData: pressedGoal });
   }
 
   function deleteAllGoals() {
@@ -89,7 +95,11 @@ export default function Home() {
           renderItem={({item}) => {
             console.log(item);
             return (
-            <GoalItem goalObj={item} handleDelete={handleDelete}/>
+            <GoalItem
+              pressHandler={handleGoalPress}
+              deleteHandler={handleGoalDelete}
+              goalObj={item}
+            />
           );
           }}
         />
