@@ -26,6 +26,7 @@ export default function Home({ navigation }) {
   function dismissModal() {
     setModalVisible(false);
   }
+
   function handleGoalDelete(deletedId) {
     setGoals((prevGoals) => {
       return prevGoals.filter((goalObj) => {
@@ -37,7 +38,6 @@ export default function Home({ navigation }) {
   function handleGoalPress(pressedGoal) {
     //receive the goal obj
     console.log(pressedGoal);
-    // navigate to GoalDetails and pass goal obj as params
     navigation.navigate("Details", { goalData: pressedGoal });
   }
 

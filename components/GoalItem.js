@@ -25,7 +25,7 @@ export default function GoalItem({goalObj, deleteHandler, pressHandler}) {
         <Button
           title="i"
           onPress={() => {
-            handlePress();
+            handlePress(goalObj);
           }}
           color={'grey'}
         />
