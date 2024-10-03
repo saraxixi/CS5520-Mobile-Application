@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Home from './components/Home'
 import GoalDetails from './components/GoalDetails'
@@ -18,7 +18,14 @@ export default function App() {
       <Stack.Screen
         name="Details" 
         component={GoalDetails} 
-        options={({route}) => {return {title: route.params ? route.params.goalData.text : "More Details"};}}
+        options={({route}) => {
+          return {title: route.params ? route.params.goalData.text : "More Details", 
+            headerRight: () => {
+              return (
+                <Button title="Warning" onPress={() => console.log("Warning")} />
+              );
+          }};
+        }}
       />
     </Stack.Navigator>
   </NavigationContainer>
