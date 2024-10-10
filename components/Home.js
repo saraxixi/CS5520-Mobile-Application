@@ -35,11 +35,11 @@ export default function Home({ navigation }) {
     });
   }
 
-  function handleGoalPress(pressedGoal) {
-    //receive the goal obj
-    console.log(pressedGoal);
-    navigation.navigate("Details", { goalData: pressedGoal });
-  }
+  // function handleGoalPress(pressedGoal) {
+  //   //receive the goal obj
+  //   console.log(pressedGoal);
+  //   navigation.navigate("Details", { goalData: pressedGoal });
+  // }
 
   function deleteAllGoals() {
     Alert.alert(
@@ -96,7 +96,6 @@ export default function Home({ navigation }) {
             console.log(item);
             return (
             <GoalItem
-              pressHandler={handleGoalPress}
               deleteHandler={handleGoalDelete}
               goalObj={item}
             />

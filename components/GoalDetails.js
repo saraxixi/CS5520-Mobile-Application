@@ -1,13 +1,22 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
-import React from 'react'
+import React, {useState, useLayoutEffect} from 'react'
 
 export default function GoalDetails({ navigation, route }) {
-  console.log(route);
+  const [isWarning, setIsWarning] = useState(false);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: isWarning ? "Warning!" : route.params?.goalData?.text || "More Details",
+      headerRight: () => (
+        <Button title="Warning" onPress={() => setIsWarning(!isWarning)} />
+      )
+    });
+  }, [navigation, isWarning, route.params]);
 
   return (
     <View>
       {route.params ? (
-        <Text>
+        <Text style={{color: isWarning ? 'red' : 'black'}}>
           Details of {route.params.goalData.text} goal with {route.params.goalData.id}
         </Text>
       ):(
