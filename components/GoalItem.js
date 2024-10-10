@@ -17,10 +17,15 @@ export default function GoalItem({goalObj, deleteHandler}) {
   }
 
   return (
-    <Pressable 
-      onPress={handlePress}
-      android_ripple={{ color: '#ddd', borderless: false}}>
+    // <Pressable 
+    //   onPress={handlePress}
+    //   android_ripple={{ color: '#ddd', borderless: false}}>
     <View style={styles.textContainer}>
+      <Pressable 
+        onPress={handlePress}
+        style={styles.buttonStyle}
+        android_ripple={{ color: '#ddd', borderless: false}}
+      >
         <Text style={styles.text}>{goalObj.text}</Text>
         <PressableButton
           pressedFunction={() => {handleDelete(goalObj.id)}}
@@ -44,8 +49,9 @@ export default function GoalItem({goalObj, deleteHandler}) {
           }}
           color={'grey'}
         /> */}
+      </Pressable>
     </View>
-    </Pressable>
+    // </Pressable>
   )
 }
 
@@ -78,5 +84,10 @@ const styles = StyleSheet.create({
       deleteButton: {
         fontSize: 20,
         color: 'white',
+      },
+
+      buttonStyle: {
+        flexDirection: 'row',
+        alignItems: 'center',
       }
 })
