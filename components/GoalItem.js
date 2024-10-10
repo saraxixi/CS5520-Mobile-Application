@@ -2,6 +2,7 @@ import { Pressable, Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import PressableButton from './PressableButton';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function GoalItem({goalObj, deleteHandler}) {
   const navigation = useNavigation();
@@ -26,7 +27,8 @@ export default function GoalItem({goalObj, deleteHandler}) {
           componentStyle={styles.deleteContainer}
           pressedStyle={styles.pressedStyle}
         >
-          <Text style={styles.deleteButton}>X</Text>
+          {/* <Text style={styles.deleteButton}>X</Text> */}
+          <Feather name="delete" size={24} color="black" />
         </PressableButton>
         {/* <Button
           title="X"
@@ -63,13 +65,13 @@ const styles = StyleSheet.create({
       },
 
       deleteContainer: {
-        backgroundColor: 'black',
+        // backgroundColor: 'black',
         padding: 10,
         borderRadius: 10,
       },
 
       pressedStyle: {
-        backgroundColor: 'red',
+        // backgroundColor: 'red',
         opacity: 0.5
       },
 

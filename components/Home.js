@@ -66,6 +66,7 @@ export default function Home({ navigation }) {
         <Header name = {appName}/>
         <PreesableButton
           pressedFunction={() => setModalVisible(true)}
+          componentStyle={{backgroundColor: 'purple'}}
         >
           <Text style={styles.buttonText}>Add a Goal</Text>
         </PreesableButton>
@@ -164,7 +165,6 @@ const styles = StyleSheet.create({
 
   buttonText: {
     color: 'white',
-    backgroundColor: 'purple',
     fontSize: 20,
   }
 });
