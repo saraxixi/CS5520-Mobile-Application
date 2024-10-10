@@ -4,6 +4,7 @@ import React, {useState}from 'react'
 import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
+import PreesableButton from './PressableButton';
 
 export default function Home({ navigation }) {
   const [receivedData, setReceivedData] = useState("");
@@ -63,7 +64,12 @@ export default function Home({ navigation }) {
       <StatusBar style="auto" />
       <View style={styles.topView}>
         <Header name = {appName}/>
-        <Button title="Add a Goal" onPress={() => setModalVisible(true)}/>
+        <PreesableButton
+          pressedFunction={() => setModalVisible(true)}
+        >
+          <Text style={styles.buttonText}>Add a Goal</Text>
+        </PreesableButton>
+        {/* <Button title="Add a Goal" onPress={() => setModalVisible(true)}/> */}
       </View>
       <Input
         textInputFocus={true}
@@ -155,4 +161,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'darkgray',
     marginVertical: 10,
   },
+
+  buttonText: {
+    color: 'white',
+    backgroundColor: 'purple',
+    fontSize: 20,
+  }
 });
