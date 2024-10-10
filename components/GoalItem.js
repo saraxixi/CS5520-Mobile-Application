@@ -23,7 +23,7 @@ export default function GoalItem({goalObj, deleteHandler}) {
         <Text style={styles.text}>{goalObj.text}</Text>
         <PressableButton
           pressedFunction={() => {handleDelete(goalObj.id)}}
-          componentStyle={styles.componentStyle}
+          componentStyle={styles.deleteContainer}
           pressedStyle={styles.pressedStyle}
         >
           <Text style={styles.deleteButton}>X</Text>
@@ -60,6 +60,12 @@ const styles = StyleSheet.create({
         color: 'purple',
         fontSize: 25,
         padding: 10,
+      },
+
+      deleteContainer: {
+        backgroundColor: 'black',
+        padding: 10,
+        borderRadius: 10,
       },
 
       pressedStyle: {
