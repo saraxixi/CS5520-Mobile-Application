@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
 import React, {useState, useLayoutEffect} from 'react'
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import PressableButton from './PressableButton';
 
 export default function GoalDetails({ navigation, route }) {
   const [isWarning, setIsWarning] = useState(false);
@@ -8,7 +10,14 @@ export default function GoalDetails({ navigation, route }) {
     navigation.setOptions({
       title: isWarning ? "Warning!" : route.params?.goalData?.text || "More Details",
       headerRight: () => (
-        <Button title="Warning" onPress={() => setIsWarning(!isWarning)} />
+        <PressableButton
+          pressedFunction={() => setIsWarning(!isWarning)}
+          componentStyle={{backgroundColor: 'purple'}}
+          pressedStyle={{opacity: 1, backgroundColor: 'purple'}}
+        >
+          <FontAwesome name="warning" size={24} color="#ffcc00" />
+        </PressableButton>
+        // <Button title="Warning" onPress={() => setIsWarning(!isWarning)} />
       )
     });
   }, [navigation, isWarning, route.params]);
