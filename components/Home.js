@@ -81,34 +81,30 @@ export default function Home({ navigation }) {
         <FlatList
           contentContainerStyle={styles.scrollViewContainer}
           data={goals}
-          ListEmptyComponent={() => {
-            return (<Text style={styles.text}>No goals to show</Text>)
-          }}
-          ListHeaderComponent={() => {
-            return (goals.length > 0 && (<Text style={styles.text}>Goals</Text>))
-          }}
-          ListFooterComponent={() => {
-            return (
-              goals.length > 0 && (
-              <View style={styles.footerContainer}>
-              <Button title="Delete all" onPress={deleteAllGoals}/>
-              </View>)
-            )
-          }}
-          ItemSeparatorComponent={({highlighted}) => {
-            return (<View style={[styles.separator, highlighted && {backgroundColor: 'purple'}]}/>)
-          }}
-          renderItem={({item, separators}) => {
-            console.log(item);
-            return (
+          renderItem={({item, separators}) => (
             <GoalItem
               deleteHandler={handleGoalDelete}
               goalObj={item}
-              highligh={separators.highlight}
+              highlight={separators.highlight}
               unhighlight={separators.unhighlight}
             />
-          );
-          }}
+          )}
+          ListEmptyComponent={
+            <Text style={styles.text}>No goals to show</Text>
+          }
+          ListHeaderComponent={
+            goals.length > 0 && (<Text style={styles.text}>Goals</Text>)
+          }
+          ListFooterComponent={
+            goals.length > 0 && (
+              <View style={styles.footerContainer}>
+                <Button title="Delete all" onPress={deleteAllGoals}/>
+              </View>
+            )
+          }
+          ItemSeparatorComponent={({highlighted}) => 
+            <View style={[styles.separator, highlighted && {backgroundColor: 'purple'}]}/>
+          }
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           {goals.map((goalObj) => {
