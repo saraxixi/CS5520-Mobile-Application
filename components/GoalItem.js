@@ -1,4 +1,4 @@
-import { Pressable, Button, StyleSheet, Text, View } from 'react-native'
+import { Pressable, Button, StyleSheet, Text, View, Alert } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import PressableButton from './PressableButton';
@@ -6,6 +6,26 @@ import Feather from '@expo/vector-icons/Feather';
 
 export default function GoalItem({goalObj, deleteHandler}) {
   const navigation = useNavigation();
+
+  function confirmDelete() {
+    console.log("confirm delete");
+    Alert.alert(
+      'Delete Goal',
+      'Are you sure you want to delete this goal?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        { text: 'Delete', 
+          onPress: handleDelete,
+          style: 'destructive'
+        }
+      ],
+      { cancelable: false}
+    );
+  }
 
   function handleDelete() {
     console.log("deleted");
@@ -23,6 +43,7 @@ export default function GoalItem({goalObj, deleteHandler}) {
     <View style={styles.textContainer}>
       <Pressable 
         onPress={handlePress}
+        onLongPress={confirmDelete}
         style={styles.buttonStyle}
         android_ripple={{ color: '#ddd', borderless: false}}
       >
