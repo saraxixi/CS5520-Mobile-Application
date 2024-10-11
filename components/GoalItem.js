@@ -36,6 +36,24 @@ export default function GoalItem({goalObj, deleteHandler}) {
     navigation.navigate("Details", { goalData: goalObj });
   }
 
+  function confirmDelete() {
+    Alert.alert(
+      "Delete Goal",
+      "Are you sure you want to delete this goal?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: () => handleDelete(),
+          style: "delete",
+        },
+      ],
+      { cancelable: true }
+    );
+  }
   return (
     // <Pressable 
     //   onPress={handlePress}
