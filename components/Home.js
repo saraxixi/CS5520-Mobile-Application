@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, ScrollView, FlatList, Alert} from 'react-native';
-import React, {useState}from 'react'
+import { StyleSheet, Text, View, Button, SafeAreaView, FlatList, Alert} from 'react-native';
+import React, {useState} from 'react'
 import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
@@ -70,7 +70,6 @@ export default function Home({ navigation }) {
         >
           <Text style={styles.buttonText}>Add a Goal</Text>
         </PreesableButton>
-        {/* <Button title="Add a Goal" onPress={() => setModalVisible(true)}/> */}
       </View>
       <Input
         textInputFocus={true}
@@ -96,15 +95,17 @@ export default function Home({ navigation }) {
               </View>)
             )
           }}
-          ItemSeparatorComponent={() => {
-            return (<View style={styles.separator}/>)
+          ItemSeparatorComponent={({highlighted}) => {
+            return (<View style={[styles.separator, highlighted && {backgroundColor: 'purple'}]}/>)
           }}
-          renderItem={({item}) => {
+          renderItem={({item, separators}) => {
             console.log(item);
             return (
             <GoalItem
               deleteHandler={handleGoalDelete}
               goalObj={item}
+              highligh={separators.highlight}
+              unhighlight={separators.unhighlight}
             />
           );
           }}

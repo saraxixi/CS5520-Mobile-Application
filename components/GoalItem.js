@@ -4,11 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import PressableButton from './PressableButton';
 import Feather from '@expo/vector-icons/Feather';
 
-export default function GoalItem({goalObj, deleteHandler}) {
+export default function GoalItem({goalObj, deleteHandler, highlight, unhighlight}) {
   const navigation = useNavigation();
 
   function confirmDelete() {
-    console.log("confirm delete");
     Alert.alert(
       'Delete Goal',
       'Are you sure you want to delete this goal?',
@@ -47,23 +46,22 @@ export default function GoalItem({goalObj, deleteHandler}) {
         },
         {
           text: "Delete",
-          onPress: () => handleDelete(),
-          style: "delete",
+          onPress: handleDelete,
+          style: "destructive",
         },
       ],
-      { cancelable: true }
     );
   }
+
   return (
-    // <Pressable 
-    //   onPress={handlePress}
-    //   android_ripple={{ color: '#ddd', borderless: false}}>
     <View style={styles.textContainer}>
       <Pressable 
         onPress={handlePress}
         onLongPress={confirmDelete}
-        style={styles.buttonStyle}
-        android_ripple={{ color: '#ddd', borderless: false}}
+        onPressIn={highlight}
+        onPressOut={unhighlight}
+        style={({pressed}) => [styles.buttonStyle, pressed && styles.pressedStyle]}
+        android_ripple={{ color: 'white', radius: 20}}
       >
         <Text style={styles.text}>{goalObj.text}</Text>
         <PressableButton
@@ -90,7 +88,6 @@ export default function GoalItem({goalObj, deleteHandler}) {
         /> */}
       </Pressable>
     </View>
-    // </Pressable>
   )
 }
 
