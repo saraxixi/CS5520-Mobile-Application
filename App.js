@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import Header from './components/Header';
-import Input from './components/Input';
-=======
 import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Home from './components/Home'
@@ -17,17 +11,9 @@ const commonHeaderStyle = {
   headerStyle: { backgroundColor: "purple" },
   headerTintColor: "white"
 }
->>>>>>> 021b6f771dd0ebd1d0bdd58c24912e2f7a3e44cf
 
 export default function App() {
   return (
-<<<<<<< HEAD
-    <View style={styles.container}>
-      <StatusBar style = "auto" />
-      <Header name = {appName} />
-      <Input shouldfoucs = {true} />
-    </View>
-=======
   <NavigationContainer>
     <Stack.Navigator screenOptions={commonHeaderStyle}>
       <Stack.Screen
@@ -49,7 +35,6 @@ export default function App() {
       />
     </Stack.Navigator>
   </NavigationContainer>
->>>>>>> 021b6f771dd0ebd1d0bdd58c24912e2f7a3e44cf
   );
 }
 

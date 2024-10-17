@@ -2,13 +2,6 @@ import { StyleSheet, TextInput, View, Text, StatusBar, Button, Modal, Alert, Ima
 import React from 'react'
 import { useState } from 'react';
 
-<<<<<<< HEAD
-export default function Input({ shouldfoucs }) {
-  const [text, setText] = useState("");
-
-  function updateText(changeText) {
-    setText(changeText);
-=======
 export default function Input({ textInputFocus, inputHandler, isModalVisible, setIsModalVisible }) {
   const [text, setText] = useState("");
   const [blur, setBlur] = useState(false);
@@ -33,7 +26,6 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
         }
       }]
     );
->>>>>>> 021b6f771dd0ebd1d0bdd58c24912e2f7a3e44cf
   }
 
   function characterCount() {
@@ -45,20 +37,6 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
   }
 
   return (
-<<<<<<< HEAD
-    <View>
-      <TextInput 
-        placeholder='Type something' 
-        keyboardType='default' 
-        style={{borderBottomColor: 'purple', borderBottomWidth: 2}}
-        value={text}
-        onChangeText = {updateText}
-        autoFocus={shouldfoucs}
-      />
-      <Text>{text}</Text>
-      {characterCount()}
-    </View>
-=======
     <Modal animationType="slide" visible={isModalVisible} transparent={true}>
       <View style={styles.container}>
         <View style={styles.modalContainer}>
@@ -110,7 +88,6 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
       </View>
     </View>
     </Modal>
->>>>>>> 021b6f771dd0ebd1d0bdd58c24912e2f7a3e44cf
   );
 }
 
