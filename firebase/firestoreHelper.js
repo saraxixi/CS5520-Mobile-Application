@@ -34,7 +34,7 @@ export async function addWarningToGoal(goalId, warningStatus) {
   try {
     const goalRef = doc(database, "goals", goalId);
     await updateDoc(goalRef, { warning: warningStatus });
-    console.log("Warning added to goal with ID:", goalId, "Warning Status:", warningStatus);
+    console.log("warning added to goal with ID:", goalId, "warning Status:", warningStatus);
   } catch (err) {
     console.log("add warning to goal ", err);
   }
