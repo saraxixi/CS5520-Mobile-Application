@@ -5,7 +5,7 @@ export default function PressableButton({children, pressedFunction, componentSty
   return (
     <Pressable 
       onPress={pressedFunction}
-      style={(pressed)=> {
+      style={({pressed})=> {
         return [
           styles.defaultStyle, 
           componentStyle, 
@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
 
   defaultPressedStyle: {
     backgroundColor: '#a4a',
-    opacity: 0.5,
+    opacity: 0.2,
   }
 })
