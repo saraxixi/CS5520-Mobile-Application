@@ -1,11 +1,30 @@
-import { Pressable, Button, StyleSheet, Text, View } from 'react-native'
+import { Pressable, Button, StyleSheet, Text, View, Alert } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import PressableButton from './PressableButton';
-import Feather from '@expo/vector-icons/Feather';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-export default function GoalItem({goalObj, deleteHandler}) {
+export default function GoalItem({goalObj, deleteHandler, highlight, unhighlight}) {
   const navigation = useNavigation();
+  
+  function confirmDelete() {
+    Alert.alert(
+      'Delete Goal',
+      'Are you sure you want to delete this goal?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        { text: 'Delete', 
+          onPress: handleDelete,
+          style: 'destructive'
+        }
+      ],
+      { cancelable: false}
+    );
+  }
 
   function handleDelete() {
     console.log("deleted");
@@ -16,15 +35,33 @@ export default function GoalItem({goalObj, deleteHandler}) {
     navigation.navigate("Details", { goalData: goalObj });
   }
 
+  function confirmDelete() {
+    Alert.alert(
+      "Delete Goal",
+      "Are you sure you want to delete this goal?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: handleDelete,
+          style: "destructive",
+        },
+      ],
+    );
+  }
+
   return (
-    // <Pressable 
-    //   onPress={handlePress}
-    //   android_ripple={{ color: '#ddd', borderless: false}}>
     <View style={styles.textContainer}>
       <Pressable 
         onPress={handlePress}
-        style={styles.buttonStyle}
-        android_ripple={{ color: '#ddd', borderless: false}}
+        onLongPress={confirmDelete}
+        onPressIn={highlight}
+        onPressOut={unhighlight}
+        style={({pressed}) => [styles.buttonStyle, pressed && styles.pressedStyle]}
+        android_ripple={{ color: 'white', radius: 20}}
       >
         <Text style={styles.text}>{goalObj.text}</Text>
         <PressableButton
@@ -33,7 +70,7 @@ export default function GoalItem({goalObj, deleteHandler}) {
           pressedStyle={styles.pressedStyle}
         >
           {/* <Text style={styles.deleteButton}>X</Text> */}
-          <Feather name="delete" size={24} color="black" />
+          <MaterialIcons name="delete-outline" size={24} color="white" />
         </PressableButton>
         {/* <Button
           title="X"
@@ -51,7 +88,6 @@ export default function GoalItem({goalObj, deleteHandler}) {
         /> */}
       </Pressable>
     </View>
-    // </Pressable>
   )
 }
 
@@ -71,13 +107,11 @@ const styles = StyleSheet.create({
       },
 
       deleteContainer: {
-        // backgroundColor: 'black',
-        padding: 10,
-        borderRadius: 10,
+        backgroundColor: 'gray',
       },
 
       pressedStyle: {
-        // backgroundColor: 'red',
+        backgroundColor: 'darkgray',
         opacity: 0.5
       },
 

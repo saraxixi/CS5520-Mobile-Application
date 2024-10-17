@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Button, SafeAreaView, ScrollView, FlatList, Alert} from 'react-native';
-import React, {useState}from 'react'
+import { StyleSheet, Text, View, Button, SafeAreaView, FlatList, Alert} from 'react-native';
+import React, {useState} from 'react'
 import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
@@ -70,7 +70,6 @@ export default function Home({ navigation }) {
         >
           <Text style={styles.buttonText}>Add a Goal</Text>
         </PreesableButton>
-        {/* <Button title="Add a Goal" onPress={() => setModalVisible(true)}/> */}
       </View>
       <Input
         textInputFocus={true}
@@ -82,32 +81,30 @@ export default function Home({ navigation }) {
         <FlatList
           contentContainerStyle={styles.scrollViewContainer}
           data={goals}
-          ListEmptyComponent={() => {
-            return (<Text style={styles.text}>No goals to show</Text>)
-          }}
-          ListHeaderComponent={() => {
-            return (goals.length > 0 && (<Text style={styles.text}>Goals</Text>))
-          }}
-          ListFooterComponent={() => {
-            return (
-              goals.length > 0 && (
-              <View style={styles.footerContainer}>
-              <Button title="Delete all" onPress={deleteAllGoals}/>
-              </View>)
-            )
-          }}
-          ItemSeparatorComponent={() => {
-            return (<View style={styles.separator}/>)
-          }}
-          renderItem={({item}) => {
-            console.log(item);
-            return (
+          renderItem={({item, separators}) => (
             <GoalItem
               deleteHandler={handleGoalDelete}
               goalObj={item}
+              highlight={separators.highlight}
+              unhighlight={separators.unhighlight}
             />
-          );
-          }}
+          )}
+          ListEmptyComponent={
+            <Text style={styles.text}>No goals to show</Text>
+          }
+          ListHeaderComponent={
+            goals.length > 0 && (<Text style={styles.text}>Goals</Text>)
+          }
+          ListFooterComponent={
+            goals.length > 0 && (
+              <View style={styles.footerContainer}>
+                <Button title="Delete all" onPress={deleteAllGoals}/>
+              </View>
+            )
+          }
+          ItemSeparatorComponent={({highlighted}) => 
+            <View style={[styles.separator, highlighted && {backgroundColor: 'purple'}]}/>
+          }
         />
         {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           {goals.map((goalObj) => {
