@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, SafeAreaView, FlatList, Alert} from 'react-native';
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 import PreesableButton from './PressableButton';
 import { database } from '../firebase/firebaseSetup';
 import { writeToDB } from '../firebase/firestoreHelper';
+import { onSnapshot } from 'firebase/firestore';
+import { collection } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
   console.log(database);
@@ -15,13 +17,27 @@ export default function Home({ navigation }) {
   const [goals, setGoals] = useState([]);
   const appName = "My awesome app"
 
+  useEffect(() => {
+    // querySnapshot is the list of documentSnapshots
+    onSnapshot(collection(database, "goals"), (querySnapshot) => {
+      let newArray = [];
+      querySnapshot.forEach((docSnapshot) => {
+        // console.log("SnapShot", docSnapshot);
+        newArray.push({...docSnapshot.data(), id: docSnapshot.id});
+      });
+      console.log("New Array", newArray);
+      setGoals(newArray);
+    });
+  }, []);
+  
+
   function handleInputData(receivedData) {
     console.log('App', receivedData);
     let newGoals = {text: receivedData};
     writeToDB(newGoals, "goals");
     // update the goals array to have the new goal as an item
     // const newArray = {...goals, newGoals};
-    setGoals((prevGoals) => {return [...prevGoals, newGoals]});
+    // setGoals((prevGoals) => {return [...prevGoals, newGoals]});
 
     console.log(newGoals);
     setReceivedData(receivedData);
