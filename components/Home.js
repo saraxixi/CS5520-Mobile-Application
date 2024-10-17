@@ -6,12 +6,12 @@ import Input from './Input';
 import GoalItem from './GoalItem';
 import PreesableButton from './PressableButton';
 import { database } from '../firebase/firebaseSetup';
-import { writeToDB } from '../firebase/firestoreHelper';
+import { writeToDB, deleteFromDB } from '../firebase/firestoreHelper';
 import { onSnapshot } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
-  console.log(database);
+  // console.log(database);
   const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
@@ -49,11 +49,13 @@ export default function Home({ navigation }) {
   }
 
   function handleGoalDelete(deletedId) {
-    setGoals((prevGoals) => {
-      return prevGoals.filter((goalObj) => {
-        return goalObj.id != deletedId;
-      });
-    });
+
+    // setGoals((prevGoals) => {
+    //   return prevGoals.filter((goalObj) => {
+    //     return goalObj.id != deletedId;
+    //   });
+    // });
+    deleteFromDB(deletedId, "goals");
   }
 
   // function handleGoalPress(pressedGoal) {
