@@ -5,8 +5,10 @@ import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 import PreesableButton from './PressableButton';
+import { database } from "../firebase/firebaseSetup";
 
 export default function Home({ navigation }) {
+  console.log(app);
   const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
