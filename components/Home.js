@@ -6,7 +6,7 @@ import Input from './Input';
 import GoalItem from './GoalItem';
 import PreesableButton from './PressableButton';
 import { database } from '../firebase/firebaseSetup';
-import { writeToDB, deleteFromDB } from '../firebase/firestoreHelper';
+import { writeToDB, deleteFromDB, deleteAllFromDB } from '../firebase/firestoreHelper';
 import { onSnapshot } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
 
@@ -71,7 +71,9 @@ export default function Home({ navigation }) {
       [
         {
           text: "Yes",
-          onPress: () => setGoals([])
+          onPress: () => {
+            deleteAllFromDB("goals");
+          },
         },
         {
           text: "No",
