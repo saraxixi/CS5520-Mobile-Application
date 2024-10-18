@@ -19,7 +19,7 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     // querySnapshot is the list of documentSnapshots
-    onSnapshot(collection(database, "goals"), (querySnapshot) => {
+    const unsubscribe = onSnapshot(collection(database, "goals"), (querySnapshot) => {
       let newArray = [];
       querySnapshot.forEach((docSnapshot) => {
         // console.log("SnapShot", docSnapshot);
@@ -28,6 +28,11 @@ export default function Home({ navigation }) {
       console.log("New Array", newArray);
       setGoals(newArray);
     });
+
+    return () => {
+      console.log("unsubscribing from firestore listener");
+      unsubscribe();
+    };
   }, []);
   
 
