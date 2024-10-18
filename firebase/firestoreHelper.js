@@ -46,13 +46,13 @@ export async function fetchGoalData(goalId) {
     const goalSnapshot = await getDoc(goalRef);
 
     if (goalSnapshot.exists()) {
-      return goalSnapshot.data(); // Return the goal data
+      return goalSnapshot.data();
     } else {
       console.error('Goal does not exist!');
-      return null; // Return null if the goal doesn't exist
+      return null;
     }
   } catch (error) {
     console.error('Error fetching goal data:', error);
-    throw error; // Re-throw the error to handle it elsewhere
+    throw error;
   }
 }
