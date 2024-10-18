@@ -1,11 +1,24 @@
 import { StyleSheet, Text, View, Button, Alert } from 'react-native'
-import React, {useState, useLayoutEffect} from 'react'
+import React, {useState, useLayoutEffect, useEffect} from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import PressableButton from './PressableButton';
-import { addWarningToGoal } from '../firebase/firestoreHelper';
+import { addWarningToGoal, fetchGoalData } from '../firebase/firestoreHelper';
 
 export default function GoalDetails({ navigation, route }) {
   const [isWarning, setIsWarning] = useState(false);
+
+  useEffect(() => {
+    async function loadGoalData() {
+      try {
+        const goalData = await fetchGoalData(route.params.goalData.id);
+        if (goalData) setIsWarning(goalData.warning || false);
+      } catch (error) {
+        console.error('Failed to load goal data:', error);
+      }
+    }
+
+    loadGoalData();
+  }, [route.params.goalData.id]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
