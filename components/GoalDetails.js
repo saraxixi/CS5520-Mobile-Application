@@ -3,6 +3,7 @@ import React, {useState, useLayoutEffect, useEffect} from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import PressableButton from './PressableButton';
 import { addWarningToGoal, fetchGoalData } from '../firebase/firestoreHelper';
+import GoalUsers from './GoalUsers';
 
 export default function GoalDetails({ navigation, route }) {
   const [isWarning, setIsWarning] = useState(false);
@@ -18,7 +19,7 @@ export default function GoalDetails({ navigation, route }) {
     }
 
     loadGoalData();
-  }, [route.params.goalData.id]);
+  }, [route?.params?.goalData?.id]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -61,6 +62,10 @@ export default function GoalDetails({ navigation, route }) {
       )}
 
       <Button title="More Details" onPress={() => navigation.navigate("Details")} />
+
+      <View>
+        {route.params && <GoalUsers goalId={route.params.goalData.id}/>}
+      </View>
     </View>
   )
 }
