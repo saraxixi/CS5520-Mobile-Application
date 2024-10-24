@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { writeToDB } from '../firebase/firestoreHelper';
+import { readAllDocs, writeToDB } from '../firebase/firestoreHelper';
 
 export default function GoalUsers({ goalId }) {
   const [users, setUsers] = useState([]);
@@ -8,6 +8,11 @@ export default function GoalUsers({ goalId }) {
   useEffect(() => {
     async function fetchData() {
       try {
+        // check if there is any data in ueser subcollection
+        const dataFromDB = await readAllDocs(`goals/${goalId}/users`);
+        if (dataFromDB.length) {
+          setUsers(dataFromDB.map((user) => {return user.name}));
+        }
         const response = await fetch('https://jsonplaceholder.typicode.com/users');
         console.log(response.status);
         if (!response.ok) {
@@ -19,7 +24,7 @@ export default function GoalUsers({ goalId }) {
           writeToDB(user, `goals/${goalId}/users`);
         });
         console.log(data);
-        setUsers(data.map(user => user.name));
+        setUsers(data.map((user) => {return user.name}));
       } catch (err) {
         console.error('Failed to fetch data:', err);
       }
