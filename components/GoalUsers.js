@@ -13,8 +13,14 @@ export default function GoalUsers({ goalId }) {
         if (dataFromDB.length) {
           setUsers(dataFromDB.map((user) => {return user.name}));
         }
+
+        // if not the proceed with fetching from fake API
+        console.log('data from API');
+
+
         const response = await fetch('https://jsonplaceholder.typicode.com/users');
         console.log(response.status);
+        
         if (!response.ok) {
           throw new Error('HTTP Error happen with status: ' + response.status);
         }
