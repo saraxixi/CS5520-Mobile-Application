@@ -64,7 +64,7 @@ export default function GoalDetails({ navigation, route }) {
       <Button title="More Details" onPress={() => navigation.navigate("Details")} />
 
       <View>
-        <GoalUsers />
+        <GoalUsers goalId={route.params.goalData.id}/>
       </View>
     </View>
   )
