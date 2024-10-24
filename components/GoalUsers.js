@@ -29,7 +29,6 @@ export default function GoalUsers({ goalId }) {
         data.forEach((user) => {  
           writeToDB(user, `goals/${goalId}/users`);
         });
-        console.log(data);
         setUsers(data.map((user) => {return user.name}));
       } catch (err) {
         console.error('Failed to fetch data:', err);

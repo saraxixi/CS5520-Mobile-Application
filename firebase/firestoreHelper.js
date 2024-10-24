@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc, getDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 
 export async function writeToDB(data, collectionName) {
@@ -30,30 +30,11 @@ export async function deleteAllFromDB(collectionName) {
   }
 }
 
-export async function addWarningToGoal(goalId, warningStatus) {
+export async function updateDB(id, data, collectionName) {
   try {
-    const goalRef = doc(database, "goals", goalId);
-    await updateDoc(goalRef, { warning: warningStatus });
-    console.log("warning added to goal with ID:", goalId, "warning Status:", warningStatus);
+    await setDoc(doc(database, collectionName, id), data, { merge: true });
   } catch (err) {
-    console.log("add warning to goal ", err);
-  }
-}
-
-export async function fetchGoalData(goalId) {
-  try {
-    const goalRef = doc(database, 'goals', goalId);
-    const goalSnapshot = await getDoc(goalRef);
-
-    if (goalSnapshot.exists()) {
-      return goalSnapshot.data();
-    } else {
-      console.error('Goal does not exist!');
-      return null;
-    }
-  } catch (error) {
-    console.error('Error fetching goal data:', error);
-    throw error;
+    console.log("update DB ", err);
   }
 }
 
