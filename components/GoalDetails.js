@@ -19,7 +19,7 @@ export default function GoalDetails({ navigation, route }) {
     }
 
     loadGoalData();
-  }, [route.params.goalData.id]);
+  }, [route?.params?.goalData?.id]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
