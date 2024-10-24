@@ -3,6 +3,7 @@ import React, {useState, useLayoutEffect, useEffect} from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import PressableButton from './PressableButton';
 import { addWarningToGoal, fetchGoalData } from '../firebase/firestoreHelper';
+import GoalUsers from './GoalUsers';
 
 export default function GoalDetails({ navigation, route }) {
   const [isWarning, setIsWarning] = useState(false);
@@ -61,6 +62,10 @@ export default function GoalDetails({ navigation, route }) {
       )}
 
       <Button title="More Details" onPress={() => navigation.navigate("Details")} />
+
+      <View>
+        <GoalUsers />
+      </View>
     </View>
   )
 }
