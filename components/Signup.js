@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
-// import { auth } from "../Firebase/firebaseSetup";
+import { auth } from "../firebase/firebaseSetup";
 
 export default function Signup({ navigation }) {
   const [email, setEmail] = useState("");
@@ -14,9 +14,9 @@ export default function Signup({ navigation }) {
   };
   const signupHandler = async () => {
     // do some validation:
-    //1. email, password and confirmpassword are not empty
-    //2.
-    //create a new user using createUserWithEmailAndPassword
+    // no field shoud be empty
+    // valid email address @ .
+    // password and confirm password should match
     try {
       if (
         email.length === 0 ||
