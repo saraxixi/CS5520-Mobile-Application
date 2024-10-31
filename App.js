@@ -82,13 +82,16 @@ const commonHeaderStyle = {
 export default function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsUserLoggedIn(true);
       } else {
         setIsUserLoggedIn(false);
       }
     });
+    return () => {
+      unsubscribe();
+    }
   }, []);
 
   return (
