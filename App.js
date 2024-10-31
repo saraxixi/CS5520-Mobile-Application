@@ -4,6 +4,8 @@ import Home from './components/Home'
 import GoalDetails from './components/GoalDetails'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import Login from './components/Login'
+import Signup from './components/Signup'
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +17,13 @@ const commonHeaderStyle = {
 export default function App() {
   return (
   <NavigationContainer>
-    <Stack.Navigator screenOptions={commonHeaderStyle}>
+    <Stack.Navigator
+      screenOptions={commonHeaderStyle}
+      initialRouteName='Login'>
+      
+      <Stack.Screen name="Login" component={Login} options={{title: "Login"}}/>
+      <Stack.Screen name="Signup" component={Signup} options={{title: "Signup"}}/>
+      
       <Stack.Screen
         name="Home" 
         component={Home} 
