@@ -40,6 +40,10 @@ export default function Signup({ navigation }) {
       console.log(userCred.user);
     } catch (err) {
       console.log("sign up ", err);
+      // tell user if an error happens
+      if (err.code === "auth/weak-password") { 
+        Alert.alert("Password should be at least 6 characters long");
+      }
       Alert.alert(err.message);
     }
   };
