@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import Home from './components/Home'
 import GoalDetails from './components/GoalDetails'
@@ -7,7 +7,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import { auth } from './firebase/firebaseSetup'
-import { onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
+import PressableButton from './components/PressableButton'
+import { AntDesign } from '@expo/vector-icons'
+import Profile from './components/Profile'
 
 const Stack = createNativeStackNavigator();
 
@@ -20,7 +23,23 @@ const AppStack = <>
   <Stack.Screen
         name="Home" 
         component={Home} 
-        options={{title: "My All Goals"}}
+        options={({ navigation }) => {
+          return {
+            title: "My Goals",
+            headerRight: () => {
+              return (
+                <PressableButton
+                  componentStyle={{backgroundColor: "purple"}}
+                  pressedFunction={() => {
+                    navigation.navigate("Profile");
+                  }}
+                >
+                  <AntDesign name="user" size={24} color="white" />
+                </PressableButton>
+              );
+            },
+          };
+        }}
       />
       <Stack.Screen
         name="Details" 
@@ -32,6 +51,25 @@ const AppStack = <>
                 <Button title="Warning" onPress={() => console.log("Warning")} />
               );
           }};
+        }}
+      />
+
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerRight: () => {
+            return (
+              <PressableButton
+                componentStyle={{backgroundColor: "purple"}}
+                pressedFunction={() => {
+                  signOut(auth);
+                }}
+              >
+                <AntDesign name="logout" size={24} color="white" />
+              </PressableButton>
+            );
+          },
         }}
       />
 </>;
