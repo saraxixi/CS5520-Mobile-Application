@@ -10,6 +10,7 @@ import { writeToDB, deleteFromDB, deleteAllFromDB } from '../firebase/firestoreH
 import { onSnapshot, query, where } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
 
+
 export default function Home({ navigation }) {
   // console.log(database);
   const [receivedData, setReceivedData] = useState("");
@@ -38,9 +39,27 @@ export default function Home({ navigation }) {
     return () => {unsubscribe();};
   }, []);
   
+  async function handleImageData(uri) {
+    try {
+    const response = await fetch(uri);
+    if (!response.ok) {
+      throw new Error(`fetch error happen with status ${response.status}`);
+    }
+    const blob = await response.blob();
+    const imageName = uri.substring(uri.lastIndexOf('/') + 1);
+    const imageRef = await ref(storage, `images/${imageName}`)
+    const uploadResult = await uploadBytesResumable(imageRef, blob);
+    console.log(uploadResult);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   function handleInputData(receivedData) {
     console.log('App', receivedData);
+    if (data.imageUri) {
+      handleImageData(data.imageUri);
+    }
     let newGoals = {text: receivedData};
     newGoals = {...newGoals, owner:auth.currentUser.uid}
     writeToDB(newGoals, "goals");
