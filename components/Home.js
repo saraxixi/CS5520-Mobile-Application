@@ -57,10 +57,10 @@ export default function Home({ navigation }) {
 
   function handleInputData(receivedData) {
     console.log('App', receivedData);
-    if (data.imageUri) {
-      handleImageData(data.imageUri);
+    if (receivedData.imageUri) {
+      handleImageData(receivedData.imageUri);
     }
-    let newGoals = {text: receivedData};
+    let newGoals = {text: receivedData.text};
     newGoals = {...newGoals, owner:auth.currentUser.uid}
     writeToDB(newGoals, "goals");
     // update the goals array to have the new goal as an item
