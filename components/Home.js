@@ -5,10 +5,11 @@ import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 import PreesableButton from './PressableButton';
-import { database } from '../firebase/firebaseSetup';
+import { auth, database } from '../firebase/firebaseSetup';
 import { writeToDB, deleteFromDB, deleteAllFromDB } from '../firebase/firestoreHelper';
-import { onSnapshot } from 'firebase/firestore';
+import { onSnapshot, query, where } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
+
 
 export default function Home({ navigation }) {
   // console.log(database);
@@ -19,26 +20,48 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     // querySnapshot is the list of documentSnapshots
-    const unsubscribe = onSnapshot(collection(database, "goals"), (querySnapshot) => {
+    const unsubscribe = onSnapshot(query(
+      collection(database, "goals"),
+      where("owner", "==", auth.currentUser.uid)
+    ),
+    (querySnapshot) => {
       let newArray = [];
       querySnapshot.forEach((docSnapshot) => {
-        // console.log("SnapShot", docSnapshot);
         newArray.push({...docSnapshot.data(), id: docSnapshot.id});
       });
-      console.log("New Array", newArray);
       setGoals(newArray);
-    });
-
-    return () => {
-      console.log("unsubscribing from firestore listener");
-      unsubscribe();
-    };
+    },
+    (error) => {
+      console.log(error);
+      Alert.alert(error.message);
+    }
+  );
+    return () => {unsubscribe();};
   }, []);
   
+  async function handleImageData(uri) {
+    try {
+    const response = await fetch(uri);
+    if (!response.ok) {
+      throw new Error(`fetch error happen with status ${response.status}`);
+    }
+    const blob = await response.blob();
+    const imageName = uri.substring(uri.lastIndexOf('/') + 1);
+    const imageRef = await ref(storage, `images/${imageName}`)
+    const uploadResult = await uploadBytesResumable(imageRef, blob);
+    console.log(uploadResult);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   function handleInputData(receivedData) {
     console.log('App', receivedData);
-    let newGoals = {text: receivedData};
+    if (receivedData.imageUri) {
+      handleImageData(receivedData.imageUri);
+    }
+    let newGoals = {text: receivedData.text};
+    newGoals = {...newGoals, owner:auth.currentUser.uid}
     writeToDB(newGoals, "goals");
     // update the goals array to have the new goal as an item
     // const newArray = {...goals, newGoals};

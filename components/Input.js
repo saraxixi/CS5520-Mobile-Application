@@ -1,15 +1,17 @@
 import { StyleSheet, TextInput, View, Text, StatusBar, Button, Modal, Alert, Image} from 'react-native';
 import React from 'react'
 import { useState } from 'react';
+import ImageManager from './ImageManager';
 
 export default function Input({ textInputFocus, inputHandler, isModalVisible, setIsModalVisible }) {
   const [text, setText] = useState("");
   const [blur, setBlur] = useState(false);
+  const [imageUri, setImageUri] = useState("");
   const minChar = 3;
   function handleConfirm() {
     // console.log(text);
     setText("");
-    inputHandler(text);
+    inputHandler({text, imageUri});
   }
   function handleCancel() {
     Alert.alert("Confirm Cancel", "Are you sure you want to cancel?", 
@@ -26,6 +28,10 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
         }
       }]
     );
+  }
+
+  function receiveImageUri(uri) {
+    setImageUri(uri);
   }
 
   function characterCount() {
@@ -81,6 +87,7 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
         ) : (
           text && <Text>{text.length}</Text>
         )}
+        <ImageManager receiveImageUri={receiveImageUri}/>
         <View style={styles.buttonContainer}>
           <Button title="Cancel" onPress={handleCancel} />
           <Button title="Confirm" onPress={handleConfirm} disabled={text.length < minChar}/>
