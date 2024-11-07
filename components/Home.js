@@ -5,9 +5,9 @@ import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 import PreesableButton from './PressableButton';
-import { database } from '../firebase/firebaseSetup';
+import { auth, database } from '../firebase/firebaseSetup';
 import { writeToDB, deleteFromDB, deleteAllFromDB } from '../firebase/firestoreHelper';
-import { onSnapshot } from 'firebase/firestore';
+import { onSnapshot, query, where } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
@@ -19,26 +19,30 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     // querySnapshot is the list of documentSnapshots
-    const unsubscribe = onSnapshot(collection(database, "goals"), (querySnapshot) => {
+    const unsubscribe = onSnapshot(query(
+      collection(database, "goals"),
+      where("owner", "==", auth.currentUser.uid)
+    ),
+    (querySnapshot) => {
       let newArray = [];
       querySnapshot.forEach((docSnapshot) => {
-        // console.log("SnapShot", docSnapshot);
         newArray.push({...docSnapshot.data(), id: docSnapshot.id});
       });
-      console.log("New Array", newArray);
       setGoals(newArray);
-    });
-
-    return () => {
-      console.log("unsubscribing from firestore listener");
-      unsubscribe();
-    };
+    },
+    (error) => {
+      console.log(error);
+      Alert.alert(error.message);
+    }
+  );
+    return () => {unsubscribe();};
   }, []);
   
 
   function handleInputData(receivedData) {
     console.log('App', receivedData);
     let newGoals = {text: receivedData};
+    newGoals = {...newGoals, owner:auth.currentUser.uid}
     writeToDB(newGoals, "goals");
     // update the goals array to have the new goal as an item
     // const newArray = {...goals, newGoals};
