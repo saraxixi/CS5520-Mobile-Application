@@ -1,6 +1,7 @@
 import { StyleSheet, TextInput, View, Text, StatusBar, Button, Modal, Alert, Image} from 'react-native';
 import React from 'react'
 import { useState } from 'react';
+import ImageManager from './ImageManager';
 
 export default function Input({ textInputFocus, inputHandler, isModalVisible, setIsModalVisible }) {
   const [text, setText] = useState("");
@@ -81,6 +82,7 @@ export default function Input({ textInputFocus, inputHandler, isModalVisible, se
         ) : (
           text && <Text>{text.length}</Text>
         )}
+        <ImageManager />
         <View style={styles.buttonContainer}>
           <Button title="Cancel" onPress={handleCancel} />
           <Button title="Confirm" onPress={handleConfirm} disabled={text.length < minChar}/>
