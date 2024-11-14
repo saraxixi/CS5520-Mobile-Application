@@ -5,15 +5,13 @@ import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 import PreesableButton from './PressableButton';
-import { auth, database } from '../firebase/firebaseSetup';
+import { auth, database, storage } from '../firebase/firebaseSetup';
 import { writeToDB, deleteFromDB, deleteAllFromDB } from '../firebase/firestoreHelper';
-import { onSnapshot, query, where } from 'firebase/firestore';
-import { collection } from 'firebase/firestore';
-
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { ref, uploadBytesResumable } from 'firebase/storage';
 
 export default function Home({ navigation }) {
   // console.log(database);
-  const [receivedData, setReceivedData] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const appName = "My awesome app"
@@ -41,38 +39,39 @@ export default function Home({ navigation }) {
   
   async function handleImageData(uri) {
     try {
-    const response = await fetch(uri);
-    if (!response.ok) {
-      throw new Error(`fetch error happen with status ${response.status}`);
-    }
-    const blob = await response.blob();
-    const imageName = uri.substring(uri.lastIndexOf('/') + 1);
-    const imageRef = await ref(storage, `images/${imageName}`)
-    const uploadResult = await uploadBytesResumable(imageRef, blob);
-    console.log(uploadResult);
+      const response = await fetch(uri);
+      if (!response.ok) {
+        throw new Error(`fetch error happen with status ${response.status}`);
+      }
+      const blob = await response.blob();
+      const imageName = uri.substring(uri.lastIndexOf('/') + 1);
+      const imageRef = await ref(storage, `images/${imageName}`)
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      console.log(uploadResult.metadata.fullPath);
+      return uploadResult.metadata.fullPath;
     } catch (error) {
-      console.log(error);
+      console.log('handle image data' + error);
     }
   }
 
-  function handleInputData(receivedData) {
+  async function handleInputData(receivedData) {
     console.log('App', receivedData);
+    let imageUri = '';
     if (receivedData.imageUri) {
-      handleImageData(receivedData.imageUri);
+      imageUri = await handleImageData(receivedData.imageUri);
     }
     let newGoals = {text: receivedData.text};
-    newGoals = {...newGoals, owner:auth.currentUser.uid}
+    newGoals = {...newGoals, owner: auth.currentUser.uid}
+    if (imageUri) {
+      newGoals = {...newGoals, imageUri};
+    }
     writeToDB(newGoals, "goals");
     // update the goals array to have the new goal as an item
     // const newArray = {...goals, newGoals};
     // setGoals((prevGoals) => {return [...prevGoals, newGoals]});
 
-    console.log(newGoals);
-    setReceivedData(receivedData);
-    setModalVisible(false);
-  }
-
-  function dismissModal() {
+    // console.log(newGoals);
+    // setReceivedData(receivedData);
     setModalVisible(false);
   }
 
