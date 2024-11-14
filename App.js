@@ -11,6 +11,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import PressableButton from './components/PressableButton'
 import { AntDesign } from '@expo/vector-icons'
 import Profile from './components/Profile'
+import Map from './components/Map'
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +73,8 @@ const AppStack = <>
           },
         }}
       />
+
+      <Stack.Screen name="Map" component={Map} />
 </>;
 
 const commonHeaderStyle = {

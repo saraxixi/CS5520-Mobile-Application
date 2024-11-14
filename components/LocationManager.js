@@ -1,13 +1,16 @@
 import { Alert, Button, StyleSheet, Text, View, Image } from 'react-native'
 import React, {useState} from 'react'
-import { auth } from '../firebase/firebaseSetup'
 import * as Location from 'expo-location';
 import { Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
+
 export default function LocationManager() {
-  const [response, requestPermission] = Location.useForegroundPermissions();
+  const navigation = useNavigation();
   const [location, setLocation] = useState(null);
+
+  const [response, requestPermission] = Location.useForegroundPermissions();
 
   async function verifyPermissions() {
     try {
@@ -35,13 +38,14 @@ export default function LocationManager() {
         longitude: locationResponse.coords.longitude
       });
     } catch (error) {
-      console.log('locate user handler' + error);
+      console.log('locate user' + error);
     }
   }
 
   return (
     <View>
       <Button title="Locate Me" onPress={locateUserHandler} />
+      <Button title="Let me choose on the map" onPress={() => {navigation.navigate('Map')}} />
       {location && (
         <Image
           source={{
