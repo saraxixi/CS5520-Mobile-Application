@@ -3,16 +3,18 @@ import React, {useState}from 'react'
 import MapView, {Marker} from 'react-native-maps'
 
 export default function Map() {
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const initialRegion = {
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  }
+
+  const [selectedLocation, setSelectedLocation] = useState(initialRegion);
 
   return (
     <MapView
-      initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
+      initialRegion={initialRegion}
       style={styles.map}
       onPress={(e) => {
         setSelectedLocation({
