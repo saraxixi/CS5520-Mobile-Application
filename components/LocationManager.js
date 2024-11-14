@@ -42,10 +42,14 @@ export default function LocationManager() {
     }
   }
 
+  function chooseLocationHandler() {
+    navigation.navigate('Map');
+  }
+
   return (
     <View>
       <Button title="Locate Me" onPress={locateUserHandler} />
-      <Button title="Let me choose on the map" onPress={() => {navigation.navigate('Map')}} />
+      <Button title="Let me choose on the map" onPress={chooseLocationHandler} />
       {location && (
         <Image
           source={{
