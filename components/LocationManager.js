@@ -1,16 +1,41 @@
 import { Alert, Button, StyleSheet, Text, View, Image } from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import * as Location from 'expo-location';
 import { Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { getOneDocument, updateDB } from '../firebase/firestoreHelper';
+import { auth } from '../firebase/firebaseSetup';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function LocationManager() {
   const navigation = useNavigation();
+  const route = useRoute();
   const [location, setLocation] = useState(null);
-
   const [response, requestPermission] = Location.useForegroundPermissions();
+
+  Location.useForegroundPermissions();
+
+  useEffect(() => {
+    async function getUserData() {
+      const userData = await getOneDocument(auth.currentUser.uid, 'users');
+      if (userData && userData.location) {
+        setLocation(userData.location);
+      }
+    }
+    getUserData();
+  }, []);
+  
+  useEffect(() => {
+    if (route.params) {
+      setLocation(route.params.selectedLocation);
+    }
+  }, [route]);
+
+  function saveLocationHandler() {
+    updateDB(auth.currentUser.uid, { location }, 'users');
+    navigation.navigate('Home');
+  }
 
   async function verifyPermissions() {
     try {
@@ -58,6 +83,11 @@ export default function LocationManager() {
           style={styles.image}
         />
       )}
+      <Button
+        disabled={!location}
+        title="Save My Location"
+        onPress={saveLocationHandler}
+      />
     </View>
   )
 }

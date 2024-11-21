@@ -9,6 +9,7 @@ import { auth, database, storage } from '../firebase/firebaseSetup';
 import { writeToDB, deleteFromDB, deleteAllFromDB } from '../firebase/firestoreHelper';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { ref, uploadBytesResumable } from 'firebase/storage';
+import * as Notifications from 'expo-notifications';
 
 export default function Home({ navigation }) {
   // console.log(database);
@@ -16,6 +17,15 @@ export default function Home({ navigation }) {
   const [goals, setGoals] = useState([]);
   const appName = "My awesome app"
 
+  useEffect(() => {
+    console.log("Home use effect");
+    async function getPushToken() {
+      const pushToken = await Notifications.getExpoPushTokenAsync();
+      console.log(pushToken.data);
+    }
+    getPushToken();
+  },[]);
+  
   useEffect(() => {
     // querySnapshot is the list of documentSnapshots
     const unsubscribe = onSnapshot(query(
