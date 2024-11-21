@@ -2,6 +2,8 @@ import { Alert, Button, StyleSheet, Text, View, Image } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import * as Location from 'expo-location';
 import { Dimensions } from 'react-native';
+import { updateDB } from '../firebase/firestoreHelper';
+import { auth } from '../firebase/firebaseSetup';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
@@ -17,6 +19,11 @@ export default function LocationManager() {
       setLocation(route.params.selectedLocation);
     }
   }, [route]);
+
+  function saveLocationHandler() {
+    updateDB(auth.currentUser.uid, { location }, 'users');
+    navigation.navigate('Home');
+  }
 
   async function verifyPermissions() {
     try {
@@ -64,6 +71,11 @@ export default function LocationManager() {
           style={styles.image}
         />
       )}
+      <Button
+        disabled={!location}
+        title="Save My Location"
+        onPress={saveLocationHandler}
+      />
     </View>
   )
 }
