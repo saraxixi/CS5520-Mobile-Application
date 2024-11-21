@@ -2,7 +2,7 @@ import { Alert, Button, StyleSheet, Text, View, Image } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import * as Location from 'expo-location';
 import { Dimensions } from 'react-native';
-import { updateDB } from '../firebase/firestoreHelper';
+import { getOneDocument, updateDB } from '../firebase/firestoreHelper';
 import { auth } from '../firebase/firebaseSetup';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -14,6 +14,18 @@ export default function LocationManager() {
   const [location, setLocation] = useState(null);
   const [response, requestPermission] = Location.useForegroundPermissions();
 
+  Location.useForegroundPermissions();
+
+  useEffect(() => {
+    async function getUserData() {
+      const userData = await getOneDocument(auth.currentUser.uid, 'users');
+      if (userData && userData.location) {
+        setLocation(userData.location);
+      }
+    }
+    getUserData();
+  }, []);
+  
   useEffect(() => {
     if (route.params) {
       setLocation(route.params.selectedLocation);
